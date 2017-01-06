@@ -9,22 +9,27 @@ lazy val root = project
   .aggregate(server)
   .settings(noPublishSettings)
   .settings(
+    name := "scala-web-stack",
     resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
   )
 
 lazy val server = project
   .in(file("modules/server"))
+  .enablePlugins(BuildInfoPlugin)
   .settings(moduleName := "server")
+  .settings(compileSettings)
   .settings(
     libraryDependencies ++= Seq(
       "org.http4s" %% "http4s-circe" % http4sVersion,
-      "org.http4s" %% "http4s-core" % http4sVersion
-    )
+      "org.http4s" %% "http4s-core" % http4sVersion,
+      "org.http4s" %% "http4s-dsl" % http4sVersion,
+      "org.http4s" %% "http4s-blaze-server" % http4sVersion
+    ),
+    buildInfoKeys := Seq[BuildInfoKey](name, version),
+    buildInfoPackage := "funstack"
   )
 
 /// settings
-
-name := "scala-web-stack"
 
 lazy val compileSettings = Def.settings(
   scalacOptions ++= Seq(
