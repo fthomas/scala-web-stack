@@ -1,10 +1,10 @@
 /// variables
 
-val projectName = "scala-web-stack"
+val projectName = "funapp"
 val rootPkg = "funstack"
 
 val circeVersion = "0.6.1"
-val http4sVersion = "0.16.0-SNAPSHOT"
+val http4sVersion = "0.15.2"
 val scalaCheckVersion = "1.13.4"
 
 /// projects
@@ -18,6 +18,7 @@ lazy val root = project
 lazy val server = project
   .in(file("modules/server"))
   .enablePlugins(BuildInfoPlugin)
+  .enablePlugins(DebianPlugin, JavaServerAppPackaging, SystemVPlugin)
   .settings(moduleName := "server")
   .settings(commonSettings)
   .settings(
@@ -38,7 +39,7 @@ lazy val server = project
 lazy val commonSettings = Def.settings(
   compileSettings,
   metadataSettings,
-  resolvers += Resolver.sonatypeRepo("snapshots")
+  packageSettings
 )
 
 lazy val compileSettings = Def.settings(
@@ -66,6 +67,10 @@ lazy val metadataSettings = Def.settings(
   name := projectName
 )
 
+lazy val packageSettings = Def.settings(
+  maintainer := s"$projectName author <$projectName@example.com>"
+)
+
 lazy val noPublishSettings = Def.settings(
   publish := (),
   publishLocal := (),
@@ -85,5 +90,6 @@ addCommandsAlias("validate",
                    "test",
                    "coverageReport",
                    "coverageOff",
-                   "doc"
+                   "doc",
+                   "debian:packageBin"
                  ))
