@@ -1,5 +1,6 @@
 /// variables
 
+val circeVersion = "0.6.1"
 val http4sVersion = "0.16.0-SNAPSHOT"
 
 /// projects
@@ -20,6 +21,7 @@ lazy val server = project
   .settings(compileSettings)
   .settings(
     libraryDependencies ++= Seq(
+      "io.circe" %% "circe-generic" % circeVersion,
       "org.http4s" %% "http4s-circe" % http4sVersion,
       "org.http4s" %% "http4s-core" % http4sVersion,
       "org.http4s" %% "http4s-dsl" % http4sVersion,
