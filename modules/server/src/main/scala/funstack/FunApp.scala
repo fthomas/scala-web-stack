@@ -1,6 +1,5 @@
 package funstack
 
-import java.lang.String
 import org.http4s.server.{Server, ServerApp}
 import scala.collection.immutable.List
 import scalaz.concurrent.Task

@@ -2,7 +2,6 @@ package funstack
 
 import io.circe.generic.auto._
 import io.circe.syntax._
-import java.lang.String
 import org.http4s.HttpService
 import org.http4s.circe.jsonEncoder
 import org.http4s.dsl._

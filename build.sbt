@@ -56,8 +56,6 @@ lazy val compileSettings = Def.settings(
     "-Xfuture",
     "-Xlint",
     "-Yno-adapted-args",
-    "-Yno-predef",
-    "-Yno-imports",
     "-Ywarn-numeric-widen",
     "-Ywarn-unused-import",
     "-Ywarn-value-discard"

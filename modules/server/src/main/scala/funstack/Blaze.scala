@@ -1,9 +1,7 @@
 package funstack
 
-import java.lang.String
 import org.http4s.server.Server
 import org.http4s.server.blaze.BlazeBuilder
-import scala.Int
 import scalaz.concurrent.Task
 
 object Blaze {
