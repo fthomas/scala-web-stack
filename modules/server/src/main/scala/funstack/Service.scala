@@ -12,7 +12,7 @@ object Service {
     case GET -> Root / "version" => Ok(BuildInfo.version)
 
     case GET -> Root / "info.json" =>
-      case class Info(name: String, version: String)
+      final case class Info(name: String, version: String)
       val payload = Info(BuildInfo.name, BuildInfo.version).asJson
       Ok(payload)
   }
