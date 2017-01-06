@@ -78,10 +78,12 @@ def addCommandsAlias(name: String, cmds: Seq[String]) =
   addCommandAlias(name, cmds.mkString(";", ";", ""))
 
 addCommandsAlias("validate",
-                 Seq("clean",
-                     "scalafmtTest",
-                     "coverageOn",
-                     "test",
-                     "coverageReport",
-                     "coverageOff",
-                     "doc"))
+                 Seq(
+                   "clean",
+                   "scalafmtTest",
+                   "coverageOn",
+                   "test",
+                   "coverageReport",
+                   "coverageOff",
+                   "doc"
+                 ))
