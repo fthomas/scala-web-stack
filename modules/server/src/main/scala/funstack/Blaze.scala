@@ -7,14 +7,14 @@ import scala.Int
 import scalaz.concurrent.Task
 
 object Blaze {
-  final case class FunAppSettings(
+  final case class FunAppConf(
       httpHost: String = "::",
       httpPort: Int = 8080
   )
 
-  val settings = FunAppSettings()
+  val conf = FunAppConf()
   val server: Task[Server] = BlazeBuilder
-    .bindHttp(settings.httpPort, settings.httpHost)
+    .bindHttp(conf.httpPort, conf.httpHost)
     .mountService(Service.route)
     .start
 }
