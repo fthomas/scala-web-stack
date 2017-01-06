@@ -1,5 +1,8 @@
 /// variables
 
+val projectName = "scala-web-stack"
+val rootPkg = "funstack"
+
 val circeVersion = "0.6.1"
 val http4sVersion = "0.16.0-SNAPSHOT"
 
@@ -8,17 +11,14 @@ val http4sVersion = "0.16.0-SNAPSHOT"
 lazy val root = project
   .in(file("."))
   .aggregate(server)
+  .settings(commonSettings)
   .settings(noPublishSettings)
-  .settings(
-    name := "scala-web-stack",
-    resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
-  )
 
 lazy val server = project
   .in(file("modules/server"))
   .enablePlugins(BuildInfoPlugin)
   .settings(moduleName := "server")
-  .settings(compileSettings)
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       "io.circe" %% "circe-generic" % circeVersion,
@@ -28,10 +28,16 @@ lazy val server = project
       "org.http4s" %% "http4s-blaze-server" % http4sVersion
     ),
     buildInfoKeys := Seq[BuildInfoKey](name, version),
-    buildInfoPackage := "funstack"
+    buildInfoPackage := rootPkg
   )
 
 /// settings
+
+lazy val commonSettings = Def.settings(
+  compileSettings,
+  metadataSettings,
+  resolvers += Resolver.sonatypeRepo("snapshots")
+)
 
 lazy val compileSettings = Def.settings(
   scalacOptions ++= Seq(
@@ -54,6 +60,10 @@ lazy val compileSettings = Def.settings(
     "-Ywarn-unused-import",
     "-Ywarn-value-discard"
   )
+)
+
+lazy val metadataSettings = Def.settings(
+  name := projectName
 )
 
 lazy val noPublishSettings = Def.settings(
