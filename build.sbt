@@ -33,7 +33,8 @@ lazy val server = project
       "org.scalacheck" %% "scalacheck" % scalaCheckVersion % Test
     ),
     buildInfoKeys := Seq[BuildInfoKey](name, version),
-    buildInfoPackage := rootPkg
+    buildInfoPackage := rootPkg,
+    javaOptions += "-Dlogback.configurationFile=src/universal/conf/logback.xml"
   )
 
 /// settings
