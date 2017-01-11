@@ -34,7 +34,10 @@ lazy val server = project
     ),
     buildInfoKeys := Seq[BuildInfoKey](name, version),
     buildInfoPackage := rootPkg,
-    javaOptions += "-Dlogback.configurationFile=src/universal/conf/logback.xml"
+    javaOptions ++= Seq(
+      "-Dapplication.configurationFile=src/universal/conf/application.conf",
+      "-Dlogback.configurationFile=src/universal/conf/logback.xml"
+    )
   )
 
 /// settings
