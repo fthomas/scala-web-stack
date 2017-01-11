@@ -1,1 +1,4 @@
-JAVA_OPTS="-Dlogback.configurationFile=/etc/${{app_name}}/logback.xml $JAVA_OPTS"
+JAVA_OPTS=" \
+  -Dapplication.configurationFile=/etc/${{app_name}}/application.conf \
+  -Dlogback.configurationFile=/etc/${{app_name}}/logback.xml \
+  $JAVA_OPTS"
