@@ -34,10 +34,13 @@ lazy val server = project
     ),
     buildInfoKeys := Seq[BuildInfoKey](name, version),
     buildInfoPackage := rootPkg,
-    javaOptions ++= Seq(
-      "-Dapplication.configurationFile=src/universal/conf/application.conf",
-      "-Dlogback.configurationFile=src/universal/conf/logback.xml"
-    )
+    javaOptions ++= {
+      val confDirectory = baseDirectory.value.absolutePath + "/src/universal/conf"
+      Seq(
+        s"-Dapplication.configurationFile=$confDirectory/application.conf",
+        s"-Dlogback.configurationFile=$confDirectory/logback.xml"
+      )
+    }
   )
 
 /// settings
