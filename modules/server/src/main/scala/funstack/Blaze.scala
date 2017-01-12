@@ -1,5 +1,7 @@
 package funstack
 
+import eu.timepit.refined.auto._
+import eu.timepit.refined.types.net.PortNumber
 import org.http4s.server.Server
 import org.http4s.server.blaze.BlazeBuilder
 import scalaz.concurrent.Task
@@ -7,7 +9,7 @@ import scalaz.concurrent.Task
 object Blaze {
   final case class FunAppConf(
       httpHost: String = "::",
-      httpPort: Int = 8080
+      httpPort: PortNumber = 8080
   )
 
   val conf = FunAppConf()

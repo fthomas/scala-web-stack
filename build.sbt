@@ -6,6 +6,7 @@ val rootPkg = "funstack"
 val circeVersion = "0.6.1"
 val http4sVersion = "0.15.2"
 val logbackVersion = "1.1.8"
+val refinedVersion = "0.6.2"
 val scalaCheckVersion = "1.13.4"
 
 lazy val keyApplicationConf = settingKey[String]("")
@@ -27,6 +28,7 @@ lazy val server = project
   .settings(
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % logbackVersion,
+      "eu.timepit" %% "refined" % refinedVersion,
       "io.circe" %% "circe-generic" % circeVersion,
       "org.http4s" %% "http4s-circe" % http4sVersion,
       "org.http4s" %% "http4s-core" % http4sVersion,
