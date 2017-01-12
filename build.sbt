@@ -8,6 +8,8 @@ val http4sVersion = "0.15.2"
 val logbackVersion = "1.1.8"
 val scalaCheckVersion = "1.13.4"
 
+lazy val keyApplicationConf = settingKey[String]("")
+
 /// projects
 
 lazy val root = project
@@ -32,12 +34,13 @@ lazy val server = project
       "org.http4s" %% "http4s-blaze-server" % http4sVersion,
       "org.scalacheck" %% "scalacheck" % scalaCheckVersion % Test
     ),
-    buildInfoKeys := Seq[BuildInfoKey](name, version),
+    keyApplicationConf := "application.conf",
+    buildInfoKeys := Seq[BuildInfoKey](name, version, keyApplicationConf),
     buildInfoPackage := rootPkg,
     javaOptions ++= {
       val confDirectory = baseDirectory.value.absolutePath + "/src/universal/conf"
       Seq(
-        s"-Dapplication.configurationFile=$confDirectory/application.conf",
+        s"-D${keyApplicationConf.value}=$confDirectory/application.conf",
         s"-Dlogback.configurationFile=$confDirectory/logback.xml"
       )
     }
