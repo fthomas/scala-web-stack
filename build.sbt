@@ -29,6 +29,7 @@ lazy val server = project
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % logbackVersion,
       "eu.timepit" %% "refined" % refinedVersion,
+      "eu.timepit" %% "refined-pureconfig" % refinedVersion,
       "io.circe" %% "circe-generic" % circeVersion,
       "org.http4s" %% "http4s-circe" % http4sVersion,
       "org.http4s" %% "http4s-core" % http4sVersion,
