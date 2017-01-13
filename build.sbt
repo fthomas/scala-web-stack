@@ -105,5 +105,7 @@ addCommandsAlias("validate",
                    "coverageReport",
                    "coverageOff",
                    "doc",
+                   "package",
+                   "packageSrc",
                    "debian:packageBin"
                  ))
