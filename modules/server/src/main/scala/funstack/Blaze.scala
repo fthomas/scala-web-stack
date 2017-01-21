@@ -7,7 +7,7 @@ import scalaz.concurrent.Task
 
 object Blaze {
   val server: Task[Server] =
-    AppConf.load.flatMap { conf =>
+    AppConf.loadConf.flatMap { conf =>
       BlazeBuilder
         .bindHttp(conf.httpPort, conf.httpHost)
         .mountService(Service.route)

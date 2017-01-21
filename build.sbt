@@ -4,7 +4,7 @@ val projectName = "funapp"
 val rootPkg = "funstack"
 
 val circeVersion = "0.6.1"
-val http4sVersion = "0.15.2"
+val http4sVersion = "0.15.3"
 val logbackVersion = "1.1.8"
 val refinedVersion = "0.6.2"
 val scalaCheckVersion = "1.13.4"
