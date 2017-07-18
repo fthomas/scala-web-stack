@@ -3,12 +3,13 @@ package funstack
 import eu.timepit.refined.auto._
 import eu.timepit.refined.pureconfig._
 import eu.timepit.refined.types.net.PortNumber
+import eu.timepit.refined.types.string.NonEmptyString
 import java.nio.file.{Path, Paths}
 import scala.util.Properties
 import scalaz.concurrent.Task
 
 final case class AppConf(
-    httpHost: String = "::",
+    httpHost: NonEmptyString = "::",
     httpPort: PortNumber = 8080
 )
 
