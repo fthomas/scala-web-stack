@@ -5,7 +5,7 @@ val rootPkg = "funstack"
 
 val circeVersion = "0.6.1"
 val http4sVersion = "0.15.3"
-val logbackVersion = "1.1.8"
+val logbackVersion = "1.2.3"
 val refinedVersion = "0.8.2"
 val scalaCheckVersion = "1.13.5"
 

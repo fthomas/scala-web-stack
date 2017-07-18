@@ -4,7 +4,6 @@ import eu.timepit.refined.auto._
 import eu.timepit.refined.pureconfig._
 import eu.timepit.refined.types.net.PortNumber
 import java.nio.file.{Path, Paths}
-import pureconfig.loadConfig
 import scala.util.Properties
 import scalaz.concurrent.Task
 
@@ -32,6 +31,6 @@ object AppConf {
 
       case Some(path) =>
         logger.info(s"Loading configuration from $path")
-        loadConfig[AppConf](path).fold(Task.fail, Task.now)
+        Task.delay(pureconfig.loadConfigOrThrow[AppConf](path))
     }
 }
