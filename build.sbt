@@ -9,7 +9,8 @@ val logbackVersion = "1.2.3"
 val refinedVersion = "0.8.2"
 val scalaCheckVersion = "1.13.5"
 
-lazy val keyApplicationConf = settingKey[String]("")
+lazy val keyApplicationConf = settingKey[String](
+  "System property that specifies the path of the configuration file.")
 
 /// projects
 
