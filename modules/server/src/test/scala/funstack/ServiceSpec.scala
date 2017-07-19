@@ -13,8 +13,8 @@ object ServiceSpec extends Properties("Service") {
     body.nonEmpty
   }
 
-  property("MediaType of /info.json") = secure {
-    val request: Request = Request(uri = Uri(path = "info.json"))
+  property("MediaType of /version.json") = secure {
+    val request: Request = Request(uri = Uri(path = "version.json"))
     val response = Service.route.run(request).run
     response.contentType.map(_.mediaType) ?= Some(MediaType.`application/json`)
   }
