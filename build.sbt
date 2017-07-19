@@ -1,3 +1,5 @@
+import sbtcrossproject.{crossProject, CrossType}
+
 /// variables
 
 val projectName = "funapp"
@@ -16,12 +18,34 @@ lazy val keyApplicationConf = settingKey[String](
 
 lazy val root = project
   .in(file("."))
-  .aggregate(server)
+  .aggregate(clientJS)
+  .aggregate(commonJS)
+  .aggregate(commonJVM)
+  .aggregate(serverJVM)
   .settings(commonSettings)
   .settings(noPublishSettings)
 
-lazy val server = project
+lazy val client = crossProject(JSPlatform)
+  .crossType(CrossType.Pure)
+  .in(file("modules/client"))
+  .dependsOn(common)
+  .settings(moduleName := "client")
+  .settings(commonSettings)
+
+lazy val clientJS = client.js
+
+lazy val common = crossProject(JSPlatform, JVMPlatform)
+  .in(file("modules/common"))
+  .settings(moduleName := "common")
+  .settings(commonSettings)
+
+lazy val commonJS = common.js
+lazy val commonJVM = common.jvm
+
+lazy val server = crossProject(JVMPlatform)
+  .crossType(CrossType.Pure)
   .in(file("modules/server"))
+  .dependsOn(common)
   .enablePlugins(BuildInfoPlugin)
   .enablePlugins(DebianPlugin, JavaServerAppPackaging, SystemVPlugin)
   .settings(moduleName := "server")
@@ -49,6 +73,8 @@ lazy val server = project
       )
     }
   )
+
+lazy val serverJVM = server.jvm
 
 /// settings
 
