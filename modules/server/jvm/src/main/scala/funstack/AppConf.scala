@@ -4,9 +4,10 @@ import eu.timepit.refined.auto._
 import eu.timepit.refined.pureconfig._
 import eu.timepit.refined.types.net.PortNumber
 import eu.timepit.refined.types.string.NonEmptyString
+import fs2.Task
 import java.nio.file.{Path, Paths}
+import org.log4s.getLogger
 import scala.util.Properties
-import scalaz.concurrent.Task
 
 final case class AppConf(
     httpHost: NonEmptyString = "::",
@@ -14,7 +15,7 @@ final case class AppConf(
 )
 
 object AppConf {
-  private[this] val logger = org.log4s.getLogger
+  private[this] val logger = getLogger
 
   def confFile: Task[Option[Path]] =
     Task.delay(

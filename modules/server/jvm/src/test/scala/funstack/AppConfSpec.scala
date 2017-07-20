@@ -9,12 +9,12 @@ object AppConfSpec extends Properties("AppConf") {
 
   property("confFile is empty if application.conf is not set") = secure {
     Properties.clearProp(keyApplicationConf)
-    AppConf.confFile.run.isEmpty
+    AppConf.confFile.unsafeRun().isEmpty
   }
 
   property("loadConf returns default AppConf if application.conf is not set") =
     secure {
       Properties.clearProp(keyApplicationConf)
-      AppConf.loadConf.run ?= AppConf()
+      AppConf.loadConf.unsafeRun() ?= AppConf()
     }
 }

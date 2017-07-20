@@ -1,17 +1,16 @@
 package funstack
 
 import eu.timepit.refined.auto._
+import fs2.{Stream, Task}
 import org.http4s.server.blaze.BlazeBuilder
-import org.http4s.server.{Server, ServerApp}
-import scala.collection.immutable.List
-import scalaz.concurrent.Task
+import org.http4s.util.StreamApp
 
-object FunApp extends ServerApp {
-  override def server(args: List[String]): Task[Server] =
-    AppConf.loadConf.flatMap { conf =>
+object FunApp extends StreamApp {
+  override def stream(args: List[String]): Stream[Task, Nothing] =
+    Stream.eval(AppConf.loadConf).flatMap { conf =>
       BlazeBuilder
         .bindHttp(conf.httpPort, conf.httpHost)
         .mountService(Service.route)
-        .start
+        .serve
     }
 }

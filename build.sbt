@@ -6,7 +6,8 @@ val projectName = "funapp"
 val rootPkg = "funstack"
 
 val circeVersion = "0.6.1"
-val http4sVersion = "0.15.14"
+val doobieVersion = "0.4.1"
+val http4sVersion = "0.17.0-M3"
 val logbackVersion = "1.2.3"
 val refinedVersion = "0.8.2"
 val scalaCheckVersion = "1.13.5"
@@ -65,6 +66,7 @@ lazy val server = crossProject(JVMPlatform)
       "org.http4s" %% "http4s-core" % http4sVersion,
       "org.http4s" %% "http4s-dsl" % http4sVersion,
       "org.http4s" %% "http4s-blaze-server" % http4sVersion,
+      //"org.tpolecat" %% "doobie-core-cats" % doobieVersion,
       "org.scalacheck" %% "scalacheck" % scalaCheckVersion % Test
     ),
     keyApplicationConf := "application.conf",
