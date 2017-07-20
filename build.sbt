@@ -1,4 +1,4 @@
-import sbtcrossproject.{crossProject, CrossType}
+import sbtcrossproject.crossProject
 
 /// variables
 
@@ -10,6 +10,7 @@ val http4sVersion = "0.15.14"
 val logbackVersion = "1.2.3"
 val refinedVersion = "0.8.2"
 val scalaCheckVersion = "1.13.5"
+val scalajsDomVersion = "0.9.3"
 
 lazy val keyApplicationConf = settingKey[String](
   "System property that specifies the path of the configuration file.")
@@ -30,6 +31,12 @@ lazy val client = crossProject(JSPlatform)
   .dependsOn(common)
   .settings(moduleName := "client")
   .settings(commonSettings)
+  .settings(
+    libraryDependencies ++= Seq(
+      "org.scala-js" %%% "scalajs-dom" % scalajsDomVersion
+    ),
+    scalaJSUseMainModuleInitializer := true
+  )
 
 lazy val clientJS = client.js
 
