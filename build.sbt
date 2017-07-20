@@ -26,7 +26,6 @@ lazy val root = project
   .settings(noPublishSettings)
 
 lazy val client = crossProject(JSPlatform)
-  .crossType(CrossType.Pure)
   .in(file("modules/client"))
   .dependsOn(common)
   .settings(moduleName := "client")
@@ -43,7 +42,6 @@ lazy val commonJS = common.js
 lazy val commonJVM = common.jvm
 
 lazy val server = crossProject(JVMPlatform)
-  .crossType(CrossType.Pure)
   .in(file("modules/server"))
   .dependsOn(common)
   .enablePlugins(BuildInfoPlugin)
