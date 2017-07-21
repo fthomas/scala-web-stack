@@ -21,15 +21,15 @@ lazy val keyApplicationConf = settingKey[String](
 lazy val root = project
   .in(file("."))
   .aggregate(clientJS)
-  .aggregate(commonJS)
-  .aggregate(commonJVM)
+  .aggregate(sharedJS)
+  .aggregate(sharedJVM)
   .aggregate(serverJVM)
   .settings(commonSettings)
   .settings(noPublishSettings)
 
 lazy val client = crossProject(JSPlatform)
   .in(file("modules/client"))
-  .jsConfigure(_.dependsOn(commonJS))
+  .jsConfigure(_.dependsOn(sharedJS))
   .settings(moduleName := "client")
   .settings(commonSettings)
   .settings(
@@ -41,17 +41,17 @@ lazy val client = crossProject(JSPlatform)
 
 lazy val clientJS = client.js
 
-lazy val common = crossProject(JSPlatform, JVMPlatform)
-  .in(file("modules/common"))
-  .settings(moduleName := "common")
+lazy val shared = crossProject(JSPlatform, JVMPlatform)
+  .in(file("modules/shared"))
+  .settings(moduleName := "shared")
   .settings(commonSettings)
 
-lazy val commonJS = common.js
-lazy val commonJVM = common.jvm
+lazy val sharedJS = shared.js
+lazy val sharedJVM = shared.jvm
 
 lazy val server = crossProject(JVMPlatform)
   .in(file("modules/server"))
-  .jvmConfigure(_.dependsOn(commonJVM))
+  .jvmConfigure(_.dependsOn(sharedJVM))
   .enablePlugins(BuildInfoPlugin)
   .enablePlugins(DebianPlugin, JavaServerAppPackaging, SystemVPlugin)
   .settings(moduleName := "server")
