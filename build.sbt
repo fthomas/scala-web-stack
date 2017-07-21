@@ -29,7 +29,7 @@ lazy val root = project
 
 lazy val client = crossProject(JSPlatform)
   .in(file("modules/client"))
-  .dependsOn(common)
+  .jsConfigure(_.dependsOn(commonJS))
   .settings(moduleName := "client")
   .settings(commonSettings)
   .settings(
@@ -51,7 +51,7 @@ lazy val commonJVM = common.jvm
 
 lazy val server = crossProject(JVMPlatform)
   .in(file("modules/server"))
-  .dependsOn(common)
+  .jvmConfigure(_.dependsOn(commonJVM))
   .enablePlugins(BuildInfoPlugin)
   .enablePlugins(DebianPlugin, JavaServerAppPackaging, SystemVPlugin)
   .settings(moduleName := "server")
