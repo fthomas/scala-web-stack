@@ -1,4 +1,4 @@
-import sbtcrossproject.crossProject
+import sbtcrossproject.{crossProject, CrossProject}
 
 /// variables
 
@@ -28,10 +28,8 @@ lazy val root = project
   .settings(noPublishSettings)
 
 lazy val client = crossProject(JSPlatform)
-  .in(file("modules/client"))
+  .configureCross(moduleCrossConfig("client"))
   .jsConfigure(_.dependsOn(sharedJS))
-  .settings(moduleName := "client")
-  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % scalajsDomVersion
@@ -41,21 +39,11 @@ lazy val client = crossProject(JSPlatform)
 
 lazy val clientJS = client.js
 
-lazy val shared = crossProject(JSPlatform, JVMPlatform)
-  .in(file("modules/shared"))
-  .settings(moduleName := "shared")
-  .settings(commonSettings)
-
-lazy val sharedJS = shared.js
-lazy val sharedJVM = shared.jvm
-
 lazy val server = crossProject(JVMPlatform)
-  .in(file("modules/server"))
+  .configureCross(moduleCrossConfig("server"))
   .jvmConfigure(_.dependsOn(sharedJVM))
   .enablePlugins(BuildInfoPlugin)
   .enablePlugins(DebianPlugin, JavaServerAppPackaging, SystemVPlugin)
-  .settings(moduleName := "server")
-  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % logbackVersion,
@@ -83,7 +71,18 @@ lazy val server = crossProject(JVMPlatform)
 
 lazy val serverJVM = server.jvm
 
+lazy val shared = crossProject(JSPlatform, JVMPlatform)
+  .configureCross(moduleCrossConfig("shared"))
+
+lazy val sharedJS = shared.js
+lazy val sharedJVM = shared.jvm
+
 /// settings
+
+def moduleCrossConfig(name: String): CrossProject => CrossProject =
+  _.in(file(s"modules/$name"))
+    .settings(moduleName := name)
+    .settings(commonSettings)
 
 lazy val commonSettings = Def.settings(
   compileSettings,
