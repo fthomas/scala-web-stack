@@ -21,9 +21,9 @@ lazy val keyApplicationConf = settingKey[String](
 lazy val root = project
   .in(file("."))
   .aggregate(clientJS)
+  .aggregate(serverJVM)
   .aggregate(sharedJS)
   .aggregate(sharedJVM)
-  .aggregate(serverJVM)
   .settings(commonSettings)
   .settings(noPublishSettings)
 
