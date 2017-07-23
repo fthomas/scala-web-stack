@@ -30,6 +30,7 @@ lazy val root = project
 lazy val client = crossProject(JSPlatform)
   .configureCross(moduleCrossConfig("client"))
   .jsConfigure(_.dependsOn(sharedJS))
+  .enablePlugins(ScalaJSWeb)
   .settings(
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % scalajsDomVersion
@@ -44,6 +45,7 @@ lazy val server = crossProject(JVMPlatform)
   .jvmConfigure(_.dependsOn(sharedJVM))
   .enablePlugins(BuildInfoPlugin)
   .enablePlugins(DebianPlugin, JavaServerAppPackaging, SystemVPlugin)
+  .enablePlugins(SbtWeb)
   .settings(
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % logbackVersion,
@@ -67,6 +69,16 @@ lazy val server = crossProject(JVMPlatform)
         s"-Dlogback.configurationFile=$confDirectory/logback.xml"
       )
     }
+  )
+  // sbt-web-scalajs settings
+  .settings(
+    scalaJSProjects := Seq(clientJS),
+    pipelineStages in Assets := Seq(scalaJSPipeline),
+    WebKeys.packagePrefix in Assets := "assets/",
+    // Put assets in server_*-web-assets.jar so that they can be
+    // accessed as resources.
+    managedClasspath in Runtime += (packageBin in Assets).value,
+    managedClasspath in Test += (packageBin in Assets).value
   )
 
 lazy val serverJVM = server.jvm
