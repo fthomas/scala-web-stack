@@ -1,8 +1,8 @@
 package funstack
 
-import org.http4s.{MediaType, Request, Response, Uri}
+import org.http4s._
 import org.scalacheck.Prop._
-import org.scalacheck.Properties
+import org.scalacheck.{Prop, Properties}
 
 object ServiceSpec extends Properties("Service") {
 
@@ -11,6 +11,12 @@ object ServiceSpec extends Properties("Service") {
     val response = unsafeGetResponse(request)
     val body = unsafeBodyAsText(response)
     body.contains("Hello, world!")
+  }
+
+  property("/assets/foo.js returns 404") = secure {
+    val request: Request = Request(uri = Uri(path = "/assets/foo.js"))
+    val response = Service.route.run(request).unsafeRun()
+    response.cata(_.status ?= Status.NotFound, Prop.falsified)
   }
 
   property("body of /version is not empty") = secure {
