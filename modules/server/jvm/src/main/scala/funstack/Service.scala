@@ -4,8 +4,7 @@ import io.circe.syntax._
 import org.http4s.HttpService
 import org.http4s.circe.jsonEncoder
 import org.http4s.dsl._
-import org.http4s.server.staticcontent.WebjarService.Config
-import org.http4s.server.staticcontent.webjarService
+import org.http4s.server.staticcontent.{webjarService, WebjarService}
 
 object Service {
   val api = HttpService {
@@ -14,5 +13,5 @@ object Service {
   }
 
   val assets: HttpService =
-    webjarService(Config())
+    webjarService(WebjarService.Config())
 }

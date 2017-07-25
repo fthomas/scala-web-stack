@@ -7,7 +7,7 @@ import org.http4s.util.StreamApp
 
 object FunApp extends StreamApp {
   override def stream(args: List[String]): Stream[Task, Nothing] =
-    Stream.eval(AppConf.loadConf).flatMap { conf =>
+    Stream.eval(Config.loadConfig).flatMap { conf =>
       BlazeBuilder
         .bindHttp(conf.httpPort, conf.httpHost)
         .mountService(Service.api, "/api")
