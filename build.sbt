@@ -5,13 +5,12 @@ import sbtcrossproject.{crossProject, CrossProject}
 val projectName = "funapp"
 val rootPkg = "funstack"
 
-val circeVersion = "0.6.1"
+val circeVersion = "0.8.0"
 val doobieVersion = "0.4.1"
 val http4sVersion = "0.17.0-M3"
 val logbackVersion = "1.2.3"
 val refinedVersion = "0.8.2"
 val scalaCheckVersion = "1.13.5"
-val scalajsDomVersion = "0.9.3"
 
 lazy val keyApplicationConf = settingKey[String](
   "System property that specifies the path of the configuration file.")
@@ -32,9 +31,6 @@ lazy val client = crossProject(JSPlatform)
   .jsConfigure(_.dependsOn(sharedJS))
   .enablePlugins(ScalaJSWeb)
   .settings(
-    libraryDependencies ++= Seq(
-      "org.scala-js" %%% "scalajs-dom" % scalajsDomVersion
-    ),
     scalaJSUseMainModuleInitializer := true
   )
 
@@ -60,8 +56,6 @@ lazy val server = crossProject(JVMPlatform)
       "org.scalacheck" %% "scalacheck" % scalaCheckVersion % Test
     ),
     keyApplicationConf := "application.conf",
-    buildInfoKeys := Seq[BuildInfoKey](name, version, keyApplicationConf),
-    buildInfoPackage := rootPkg,
     javaOptions ++= {
       val confDirectory = baseDirectory.value.absolutePath + "/src/universal/conf"
       Seq(
@@ -70,15 +64,20 @@ lazy val server = crossProject(JVMPlatform)
       )
     }
   )
+  // sbt-buildinfo settings
+  .settings(
+    buildInfoKeys := Seq[BuildInfoKey](
+      name,
+      version,
+      moduleName,
+      keyApplicationConf
+    ),
+    buildInfoPackage := rootPkg
+  )
   // sbt-web-scalajs settings
   .settings(
     scalaJSProjects := Seq(clientJS),
-    pipelineStages in Assets := Seq(scalaJSPipeline),
-    WebKeys.packagePrefix in Assets := "assets/",
-    // Put assets in server_*-web-assets.jar so that they can be
-    // accessed as resources.
-    managedClasspath in Runtime += (packageBin in Assets).value,
-    managedClasspath in Test += (packageBin in Assets).value
+    pipelineStages in Assets := Seq(scalaJSPipeline)
   )
 
 lazy val serverJVM = server.jvm

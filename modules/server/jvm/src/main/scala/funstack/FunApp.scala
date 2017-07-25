@@ -10,7 +10,8 @@ object FunApp extends StreamApp {
     Stream.eval(AppConf.loadConf).flatMap { conf =>
       BlazeBuilder
         .bindHttp(conf.httpPort, conf.httpHost)
-        .mountService(Service.route)
+        .mountService(Service.api, "/api")
+        .mountService(Service.assets, "/assets")
         .serve
     }
 }
