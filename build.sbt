@@ -56,7 +56,7 @@ lazy val server = crossProject(JVMPlatform)
       "org.scalacheck" %% "scalacheck" % scalaCheckVersion % Test
     ),
     keyApplicationConf := "application.conf",
-    javaOptions ++= {
+    javaOptions.in(reStart) ++= {
       val confDirectory = sourceDirectory.in(Universal).value / "conf"
       Seq(
         s"-D${keyApplicationConf.value}=$confDirectory/application.conf",
