@@ -57,7 +57,7 @@ lazy val server = crossProject(JVMPlatform)
     ),
     keyApplicationConf := "application.conf",
     javaOptions ++= {
-      val confDirectory = baseDirectory.value.absolutePath + "/src/universal/conf"
+      val confDirectory = sourceDirectory.in(Universal).value / "conf"
       Seq(
         s"-D${keyApplicationConf.value}=$confDirectory/application.conf",
         s"-Dlogback.configurationFile=$confDirectory/logback.xml"
@@ -77,7 +77,7 @@ lazy val server = crossProject(JVMPlatform)
   // sbt-web-scalajs settings
   .settings(
     scalaJSProjects := Seq(clientJS),
-    pipelineStages in Assets := Seq(scalaJSPipeline)
+    pipelineStages.in(Assets) := Seq(scalaJSPipeline)
   )
 
 lazy val serverJVM = server.jvm
