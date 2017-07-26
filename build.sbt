@@ -2,8 +2,8 @@ import sbtcrossproject.{crossProject, CrossProject}
 
 /// variables
 
-val projectName = "funapp"
-val rootPkg = "funstack"
+val projectName = "typelevel-webapp"
+val rootPkg = "org.example"
 
 val circeVersion = "0.8.0"
 val doobieVersion = "0.4.1"
@@ -127,7 +127,7 @@ lazy val metadataSettings = Def.settings(
 )
 
 lazy val packageSettings = Def.settings(
-  maintainer := s"$projectName author <$projectName@example.com>"
+  maintainer := s"$projectName author(s) <$projectName@example.org>"
 )
 
 lazy val noPublishSettings = Def.settings(

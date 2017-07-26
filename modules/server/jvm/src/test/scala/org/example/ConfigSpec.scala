@@ -1,4 +1,4 @@
-package funstack
+package org.example
 
 import org.scalacheck.Prop._
 import org.scalacheck.Properties

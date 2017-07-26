@@ -1,4 +1,4 @@
-package funstack
+package org.example
 
 import eu.timepit.refined.auto._
 import eu.timepit.refined.pureconfig._

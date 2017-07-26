@@ -1,4 +1,4 @@
-package funstack
+package org.example
 
 import io.circe.syntax._
 import org.http4s.HttpService

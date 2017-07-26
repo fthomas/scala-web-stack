@@ -1,4 +1,4 @@
-package funstack
+package org.example
 
 import org.http4s._
 import org.scalacheck.Prop._
