@@ -20,16 +20,17 @@ object Config {
   def propAsPath(name: String): Task[Option[Path]] =
     Task.delay(Properties.propOrNone(name).map(Paths.get(_)))
 
-  def loadConfig: Task[Config] =
-    propAsPath(BuildInfo.keyApplicationConf).flatMap {
+  def load: Task[Config] = {
+    val prop = BuildInfo.keyApplicationConf
+    propAsPath(prop).flatMap {
       case None =>
         logger.info(
-          "Using default configuration " +
-            s"(property ${BuildInfo.keyApplicationConf} is not set)")
+          s"Using default configuration (property '$prop' is not set)")
         Task.now(Config())
 
       case Some(path) =>
         logger.info(s"Loading configuration from $path")
         Task.delay(pureconfig.loadConfigOrThrow[Config](path))
     }
+  }
 }

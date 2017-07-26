@@ -6,12 +6,12 @@ import scala.util.Properties
 
 object ConfigSpec extends Properties("Config") {
 
-  property("loadConfig") =
+  property("load") =
     secure {
       Properties.clearProp(BuildInfo.keyApplicationConf)
-      "default" |: (Config.loadConfig.unsafeRun() ?= Config())
+      "default" |: (Config.load.unsafeRun() ?= Config())
     } && secure {
       Properties.setProp(BuildInfo.keyApplicationConf, "non-existent.conf")
-      "non-existent" |: Config.loadConfig.unsafeAttemptRun().isLeft
+      "non-existent" |: Config.load.unsafeAttemptRun().isLeft
     }
 }
