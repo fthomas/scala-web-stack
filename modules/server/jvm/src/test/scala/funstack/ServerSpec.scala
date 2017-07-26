@@ -3,10 +3,10 @@ package funstack
 import org.scalacheck.Prop._
 import org.scalacheck.Properties
 
-object FunAppSpec extends Properties("FunApp") {
+object ServerSpec extends Properties("Server") {
 
   property("stream") = secure {
-    FunApp.stream(List.empty)
+    Server.stream(List.empty)
     true
   }
 }

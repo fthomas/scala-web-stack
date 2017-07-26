@@ -7,14 +7,14 @@ import org.scalacheck.{Prop, Properties}
 object ServiceSpec extends Properties("Service") {
 
   property("MediaType of /version.json") = secure {
-    val request: Request = Request(uri = Uri(path = "/version.json"))
+    val request = Request(Method.GET, Uri.uri("/version.json"))
     val response = unsafeGetResponse(Service.api, request)
     mediaTypeEquals(response, MediaType.`application/json`)
   }
 
   property("body of client-opt.js contains 'Hello, world!'") = secure {
     val path = s"/${BuildInfo.moduleName}/${BuildInfo.version}/client-opt.js"
-    val request: Request = Request(uri = Uri(path = path))
+    val request = Request(Method.GET, Uri(path = path))
     val response = unsafeGetResponse(Service.assets, request)
     val body = unsafeBodyAsText(response)
     body.contains("Hello, world!")
