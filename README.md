@@ -1,4 +1,4 @@
-# scala-web-stack
-[![Build Status](https://travis-ci.org/fthomas/scala-web-stack.svg?branch=master)](https://travis-ci.org/fthomas/scala-web-stack)
-[![codecov](https://codecov.io/gh/fthomas/scala-web-stack/branch/master/graph/badge.svg)](https://codecov.io/gh/fthomas/scala-web-stack)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0e472a5e7740437da829d9c24ee97595)](https://www.codacy.com/app/fthomas/scala-web-stack?utm_source=github.com&utm_medium=referral&utm_content=fthomas/scala-web-stack&utm_campaign=badger)
+# typelevel-webapp
+[![Build Status](https://travis-ci.org/fthomas/typelevel-webapp.svg?branch=master)](https://travis-ci.org/fthomas/typelevel-webapp)
+[![codecov](https://codecov.io/gh/fthomas/typelevel-webapp/branch/master/graph/badge.svg)](https://codecov.io/gh/fthomas/typelevel-webapp)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0e472a5e7740437da829d9c24ee97595)](https://www.codacy.com/app/fthomas/typelevel-webapp?utm_source=github.com&utm_medium=referral&utm_content=fthomas/typelevel-webapp&utm_campaign=badger)
