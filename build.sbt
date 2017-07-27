@@ -7,6 +7,7 @@ val rootPkg = "org.example"
 
 val circeVersion = "0.8.0"
 val doobieVersion = "0.4.1"
+val h2Version = "1.4.196"
 val http4sVersion = "0.17.0-M3"
 val logbackVersion = "1.2.3"
 val refinedVersion = "0.8.2"
@@ -45,6 +46,7 @@ lazy val server = crossProject(JVMPlatform)
   .settings(
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % logbackVersion,
+      "com.h2database" % "h2" % h2Version,
       "eu.timepit" %% "refined" % refinedVersion,
       "eu.timepit" %% "refined-pureconfig" % refinedVersion,
       "io.circe" %% "circe-generic" % circeVersion,
@@ -52,7 +54,7 @@ lazy val server = crossProject(JVMPlatform)
       "org.http4s" %% "http4s-core" % http4sVersion,
       "org.http4s" %% "http4s-dsl" % http4sVersion,
       "org.http4s" %% "http4s-blaze-server" % http4sVersion,
-      //"org.tpolecat" %% "doobie-core-cats" % doobieVersion,
+      "org.tpolecat" %% "doobie-core-cats" % doobieVersion,
       "org.scalacheck" %% "scalacheck" % scalaCheckVersion % Test
     ),
     keyApplicationConf := "application.conf",

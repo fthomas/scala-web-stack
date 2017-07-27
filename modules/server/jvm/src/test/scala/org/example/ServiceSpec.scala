@@ -5,7 +5,6 @@ import org.scalacheck.Prop._
 import org.scalacheck.{Prop, Properties}
 
 object ServiceSpec extends Properties("Service") {
-
   property("MediaType of /version.json") = secure {
     val request = Request(Method.GET, Uri.uri("/version.json"))
     val response = unsafeGetResponse(Service.api, request)

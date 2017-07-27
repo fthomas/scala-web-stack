@@ -5,7 +5,6 @@ import org.scalacheck.Properties
 import scala.util.Properties
 
 object ConfigSpec extends Properties("Config") {
-
   property("load") =
     secure {
       Properties.clearProp(BuildInfo.keyApplicationConf)
