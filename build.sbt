@@ -11,7 +11,7 @@ val h2Version = "1.4.196"
 val http4sVersion = "0.17.0-M3"
 val logbackVersion = "1.2.3"
 val refinedVersion = "0.8.2"
-val scalaCheckVersion = "1.13.5"
+val specs2Version = "3.8.6"
 
 lazy val keyApplicationConf = settingKey[String](
   "System property that specifies the path of the configuration file.")
@@ -50,12 +50,13 @@ lazy val server = crossProject(JVMPlatform)
       "eu.timepit" %% "refined" % refinedVersion,
       "eu.timepit" %% "refined-pureconfig" % refinedVersion,
       "io.circe" %% "circe-generic" % circeVersion,
+      "org.http4s" %% "http4s-blaze-server" % http4sVersion,
       "org.http4s" %% "http4s-circe" % http4sVersion,
       "org.http4s" %% "http4s-core" % http4sVersion,
       "org.http4s" %% "http4s-dsl" % http4sVersion,
-      "org.http4s" %% "http4s-blaze-server" % http4sVersion,
       "org.tpolecat" %% "doobie-core-cats" % doobieVersion,
-      "org.scalacheck" %% "scalacheck" % scalaCheckVersion % Test
+      "org.http4s" %% "http4s-testing" % http4sVersion % Test,
+      "org.specs2" %% "specs2-core" % specs2Version % Test
     ),
     keyApplicationConf := "application.conf",
     javaOptions.in(reStart) ++= {

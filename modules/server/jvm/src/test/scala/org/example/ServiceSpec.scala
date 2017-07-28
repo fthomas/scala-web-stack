@@ -1,30 +1,32 @@
 package org.example
 
 import org.http4s._
-import org.scalacheck.Prop._
-import org.scalacheck.{Prop, Properties}
+import org.http4s.testing.Http4sMatchers
+import org.specs2.mutable.Specification
 
-object ServiceSpec extends Properties("Service") {
-  property("MediaType of /version.json") = secure {
-    val request = Request(Method.GET, Uri.uri("/version.json"))
-    val response = unsafeGetResponse(Service.api, request)
-    mediaTypeEquals(response, MediaType.`application/json`)
+object ServiceSpec extends Specification with Http4sMatchers {
+  "Service.api" >> {
+    "/now.json has status 200" >> {
+      val request = Request(Method.GET, Uri.uri("/now.json"))
+      val response = unsafeGetResponse(Service.api, request)
+      response must haveStatus(Status.Ok)
+    }
+    "/version.json has MediaType application/json" >> {
+      val request = Request(Method.GET, Uri.uri("/version.json"))
+      val response = unsafeGetResponse(Service.api, request)
+      response must haveMediaType(MediaType.`application/json`)
+    }
   }
 
-  property("body of client-opt.js contains 'Hello, world!'") = secure {
-    val path = s"/${BuildInfo.moduleName}/${BuildInfo.version}/client-opt.js"
-    val request = Request(Method.GET, Uri(path = path))
-    val response = unsafeGetResponse(Service.assets, request)
-    val body = unsafeBodyAsText(response)
-    body.contains("Hello, world!")
+  "Service.assets" >> {
+    "/client-opt.js contains 'Hello, world!'" >> {
+      val path = s"/${BuildInfo.moduleName}/${BuildInfo.version}/client-opt.js"
+      val request = Request(Method.GET, Uri(path = path))
+      val response = unsafeGetResponse(Service.assets, request)
+      response must haveBody(contain("Hello, world!"))
+    }
   }
-
-  def mediaTypeEquals(response: Response, mediaType: MediaType): Prop =
-    response.contentType.map(_.mediaType) ?= Some(mediaType)
 
   def unsafeGetResponse(service: HttpService, request: Request): Response =
     service.run(request).unsafeRun().orNotFound
-
-  def unsafeBodyAsText(response: Response): String =
-    response.bodyAsText.runLog.unsafeRun().mkString
 }
