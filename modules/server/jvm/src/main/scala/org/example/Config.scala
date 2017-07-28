@@ -29,9 +29,9 @@ object Config {
         Task.now(Config())
 
       case Some(path) if !Files.isReadable(path) =>
-        Task.fail(
-          new FileNotFoundException(
-            s"Property '$prop' references a non-accessible file: $path"))
+        val message =
+          s"Property '$prop' references a non-accessible file: $path"
+        Task.fail(new FileNotFoundException(message))
 
       case Some(path) =>
         logger.info(s"Loading configuration from $path")
