@@ -8,10 +8,12 @@ import org.http4s.util.StreamApp
 object Server extends StreamApp {
   override def stream(args: List[String]): Stream[Task, Nothing] =
     Stream.eval(Config.load(BuildInfo.keyApplicationConf)).flatMap { config =>
-      BlazeBuilder
-        .bindHttp(config.httpPort, config.httpHost)
-        .mountService(Service.api, "/api")
-        .mountService(Service.assets, "/assets")
-        .serve
+      blazeBuilder(config).serve
     }
+
+  def blazeBuilder(config: Config): BlazeBuilder =
+    BlazeBuilder
+      .bindHttp(config.httpPort, config.httpHost)
+      .mountService(Service.api, "/api")
+      .mountService(Service.assets, "/assets")
 }
