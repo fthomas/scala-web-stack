@@ -11,8 +11,12 @@ import org.log4s.getLogger
 import scala.util.Properties
 
 final case class Config(
-    httpHost: NonEmptyString = "::",
-    httpPort: PortNumber = 8080
+    http: Http = Http()
+)
+
+final case class Http(
+    host: NonEmptyString = "::",
+    port: PortNumber = 8080
 )
 
 object Config {
