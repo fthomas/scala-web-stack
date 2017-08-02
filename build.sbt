@@ -83,6 +83,13 @@ lazy val server = crossProject(JVMPlatform)
     ),
     buildInfoPackage := rootPkg
   )
+  // sbt-native-packager settings
+  .settings(
+    bashScriptExtraDefines ++= Seq(
+      s"""addJava "-D${keyApplicationConf.value}=$${app_home}/../conf/application.conf"""",
+      """addJava "-Dlogback.configurationFile=${app_home}/../conf/logback.xml""""
+    )
+  )
   // sbt-web-scalajs settings
   .settings(
     scalaJSProjects := Seq(clientJS),
