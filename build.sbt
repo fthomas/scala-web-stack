@@ -14,9 +14,6 @@ val refinedVersion = "0.8.2"
 val scalaTestVersion = "3.0.1"
 val specs2Version = "3.8.6"
 
-lazy val keyApplicationConf = settingKey[String](
-  "System property that specifies the path of the configuration file.")
-
 /// projects
 
 lazy val root = project
@@ -64,29 +61,23 @@ lazy val server = crossProject(JVMPlatform)
       "org.http4s" %% "http4s-testing" % http4sVersion % Test,
       "org.specs2" %% "specs2-core" % specs2Version % Test
     ),
-    keyApplicationConf := "application.conf",
     javaOptions.in(reStart) ++= {
       val confDirectory = sourceDirectory.in(Universal).value / "conf"
       Seq(
-        s"-D${keyApplicationConf.value}=$confDirectory/application.conf",
+        s"-Dconfig.file=$confDirectory/application.conf",
         s"-Dlogback.configurationFile=$confDirectory/logback.xml"
       )
     }
   )
   // sbt-buildinfo settings
   .settings(
-    buildInfoKeys := Seq[BuildInfoKey](
-      name,
-      version,
-      moduleName,
-      keyApplicationConf
-    ),
+    buildInfoKeys := Seq[BuildInfoKey](name, version, moduleName),
     buildInfoPackage := rootPkg
   )
   // sbt-native-packager settings
   .settings(
     bashScriptExtraDefines ++= Seq(
-      s"""addJava "-D${keyApplicationConf.value}=$${app_home}/../conf/application.conf"""",
+      """addJava "-Dconfig.file=${app_home}/../conf/application.conf"""",
       """addJava "-Dlogback.configurationFile=${app_home}/../conf/logback.xml""""
     )
   )
